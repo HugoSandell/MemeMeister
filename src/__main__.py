@@ -9,7 +9,6 @@ f = open('keys.json')
 API_KEY = json.load(f)["DISCORD_API_KEY"]
 f.close()
 
-running = True
 client = discord.Client(activity=discord.Game("with my lolis"))
 
 @client.event
@@ -47,23 +46,4 @@ async def on_message(message):
     except Exception as e:
         print(e)
 
-
-def handle_input():
-    while running:
-        query = input()
-        if query.startswith('say '):
-            print(query.partition('say ')[2])
-        if query.strip() == 'reload':
-            print("Reloading resources...")
-            R.load()
-            print("Done!")
-
-
-t1 = threading.Thread(target=client.run, args=(API_KEY,))
-t2 = threading.Thread(target=handle_input)
-
-t1.start()
-t2.start()
-
-t1.join()
-t2.join()
+client.run(API_KEY)
